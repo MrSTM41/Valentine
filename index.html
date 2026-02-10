@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💘</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: black;
+  overflow: hidden;
+}
+
+/* ---------- PAGES ---------- */
+.page {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.page.active {
+  display: flex;
+}
+
+/* ---------- PAGE 1 (ENVELOPE) ---------- */
+#page1 {
+  background: black;
+}
+
+#envelope-container {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
+
+#envelope-container img {
+  width: 80vw;
+  max-width: 400px;
+}
+
+#envelope-text {
+  margin-top: 20px;
+  color: white;
+  font-size: 18px;
+}
+
+/* ---------- PAGE 2 (PROPOSAL) ---------- */
+#page2 img {
+  width: 95vw;
+  max-width: 900px;
+}
+
+/* Invisible click areas */
+.choice {
+  position: absolute;
+  cursor: pointer;
+}
+
+#yes {
+  width: 140px;
+  height: 70px;
+  left: 28%;
+  bottom: 15%;
+}
+
+#no {
+  width: 140px;
+  height: 70px;
+  right: 28%;
+  bottom: 15%;
+}
+
+/* ---------- HEART ANIMATION ---------- */
+.heart {
+  position: absolute;
+  font-size: 22px;
+  animation: fly 1.5s forwards;
+}
+
+@keyframes fly {
+  to {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
+/* ---------- WRONG CHOICE ---------- */
+#wrong {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: red;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div id="envelope-container">
+    <img src="envelope.jpg" alt="Envelope">
+    <div id="envelope-text">
+      From your Love and Future Husband,<br>
+      <strong>Rovorne Bacchus</strong>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <img src="proposal.png" alt="Valentine Proposal">
+  <div class="choice" id="yes"></div>
+  <div class="choice" id="no"></div>
+</div>
+
+<!-- WRONG CHOICE SCREEN -->
+<div id="wrong">WRONG CHOICE</div>
+
+<script>
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const envelope = document.getElementById("envelope-container");
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const wrong = document.getElementById("wrong");
+const music = document.getElementById("bgMusic");
+
+/* Envelope click */
+envelope.onclick = () => {
+  page1.classList.remove("active");
+  page2.classList.add("active");
+  music.volume = 0.4;
+  music.play();
+};
+
+/* YES → hearts from the word */
+yes.onclick = () => {
+  const rect = yes.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = centerX + "px";
+    heart.style.top = centerY + "px";
+    heart.style.setProperty("--x", `${Math.random() * 300 - 150}px`);
+    heart.style.setProperty("--y", `${Math.random() * -300}px`);
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1500);
+  }
+};
+
+/* NO → WRONG CHOICE */
+no.onclick = () => {
+  wrong.style.display = "flex";
+  setTimeout(() => {
+    wrong.style.display = "none";
+  }, 1500);
+};
+</script>
+
+</body>
+</html>
+/
+    .heart.yes-burst {
+      animation: burst 1.5s ease-out forwards;
+    }
+
+    @keyframes burst {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(2); opacity: 0; }
+    }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 105, 180, 0.95);
+      padding: 30px 50px;
+      border-radius: 20px;
+      color: white;
+      font-size: 32px;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope-container" id="envelope">
+    <!-- Closed envelope image -->
+    <img src="https://img.freepik.com/free-photo/front-view-romantic-envelope_23-2149282521.jpg" alt="Closed Valentine Letter" class="envelope-image" />
+    <div class="envelope-signature">From your love and future husband,<br>Rovorne Bacchus 💍</div>
+  </div>
+
+  <div class="proposal-container" id="proposal">
+    <!-- Update the src with your GitHub image URL -->
+    <img src="1000144030.png" alt="Valentine Proposal" class="proposal-image" />
+    
+    <!-- Invisible hotspots over the YES/NO buttons in your image -->
+    <div class="proposal-hotspot yes-hotspot" id="yes"></div>
+    <div class="proposal-hotspot no-hotspot" id="no"></div>
+  </div>
+
+  <div class="wrong-choice" id="wrongChoice">WRONG CHOICE!</div>
+  <div class="success-message" id="successMessage">
+    💖 YES! You've made the right choice! 💖<br>
+    I love you more than words can say!
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const proposal = document.getElementById('proposal');
+    const yes = document.getElementById('yes');
+    const no = document.getElementById('no');
+    const wrongChoice = document.getElementById('wrongChoice');
+    const successMessage = document.getElementById('successMessage');
+    const body = document.body;
+
+    // Click envelope to open
+    envelope.addEventListener('click', () => {
+      envelope.classList.add('open');
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        proposal.style.display = 'block';
+      }, 500);
+    });
+
+    // YES button click - hearts burst
+    yes.addEventListener('click', () => {
+      // Get position of YES hotspot
+      const yesRect = yes.getBoundingClientRect();
+      const centerX = yesRect.left + yesRect.width / 2;
+      const centerY = yesRect.top + yesRect.height / 2;
+      
+      // Burst effect hearts
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart', 'yes-burst');
+        heart.innerHTML = '💖';
+        
+        // Random burst direction and distance
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 100 + Math.random() * 200;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        heart.style.setProperty('--tx', tx + 'px');
+        heart.style.setProperty('--ty', ty + 'px');
+        heart.style.left = centerX + 'px';
+        heart.style.top = centerY + 'px';
+        heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+        
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }
+      
+      // Floating hearts
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '💖';
+        heart.style.left = (centerX - 150 + Math.random() * 300) + 'px';
+        heart.style.top = (centerY - 75 + Math.random() * 150) + 'px';
+        heart.style.fontSize = (20 + Math.random() * 25) + 'px';
+        
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
+      
+      // Show success message after 0.5 seconds
+      setTimeout(() => {
+        successMessage.style.display = 'block';
+      }, 500);
+    });
+
+    // NO button click - blackout with wrong choice message
+    no.addEventListener('click', () => {
+      // Blackout effect
+      body.classList.add('blackout');
+      wrongChoice.style.display = 'block';
+      
+      // Hide other elements
+      proposal.style.display = 'none';
+      envelope.style.display = 'none';
+      successMessage.style.display = 'none';
+      
+      // Reset after 1.5 seconds
+      setTimeout(() => {
+        body.classList.remove('blackout');
+        wrongChoice.style.display = 'none';
+        
+        // Show proposal again so they can choose YES
+        proposal.style.display = 'block';
+      }, 1500);
+    });
+
+    // Close success message when clicked
+    successMessage.addEventListener('click', () => {
+      successMessage.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
