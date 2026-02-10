@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine's Proposal 💖</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff69b4, #ff85c1);
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+    }
+
+    /* Letter */
+    .envelope {
+      width: 360px;
+      height: 260px;
+      background: #fff;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      transition: transform 0.6s;
+      position: relative;
+    }
+
+    .envelope.open {
+      transform: scale(0);
+    }
+
+    .envelope h2 {
+      font-size: 96px;
+      margin: 0;
+    }
+
+    /* Proposal */
+    .proposal {
+      display: none;
+      background: #ff6fb7;
+      padding: 20px;
+      border-radius: 16px;
+      max-width: 95vw;
+      max-height: 95vh;
+      text-align: center;
+      position: relative;
+    }
+
+    .proposal img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+
+    .buttons {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .yes {
+      color: #fff;
+      cursor: pointer;
+      text-shadow: 0 0 10px #ff2f92;
+    }
+
+    .no {
+      color: #222;
+      position: absolute;
+      cursor: pointer;
+    }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: float 3s linear forwards;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+    }
+      .signature {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-size: 14px;
+      color: #2b0033;
+      font-style: italic;
+    }
+      .envelope-signature {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      font-size: 13px;
+      color: #4a0033;
+      font-style: italic;
+    }
+
+    /* YES hotspot over image */
+    .yes-hotspot {
+      position: absolute;
+      cursor: pointer;
+      /* adjust these values to sit over YES in the image */
+      width: 80px;
+      height: 40px;
+      bottom: 40px;
+      left: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope" id="envelope">
+    <h2>💌</h2>
+    <div class="envelope-signature">From your love and future husband,<br>Rovorne Bacchus 💍</div>
+  </div>
+
+  <div class="proposal" id="proposal">
+    <div class="signature">From your love and future husband,<br>Rovorne Bacchus 💍</div>
+    <img src="1000144030.png" alt="Valentine Proposal" />
+
+    <div class="yes-hotspot" id="yes"></div>
+      <div class="no" id="no">NO?</div>
+    </div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const proposal = document.getElementById('proposal');
+    const yes = document.getElementById('yes');
+    const no = document.getElementById('no');
+
+    envelope.addEventListener('click', () => {
+      envelope.classList.add('open');
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        proposal.style.display = 'block';
+        moveNo();
+      }, 500);
+    });
+
+    function moveNo() {
+      const x = Math.random() * (proposal.clientWidth - 60);
+      const y = Math.random() * (proposal.clientHeight - 60);
+      no.style.left = x + 'px';
+      no.style.top = y + 'px';
+    }
+
+    no.addEventListener('mouseenter', moveNo);
+    no.addEventListener('click', moveNo);
+
+    yes.addEventListener('click', () => {
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '💖';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = window.innerHeight - 50 + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
+    });
+  </script>
+</body>
+</html>
