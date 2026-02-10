@@ -10,57 +10,31 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
 }
 
 body {
   background: black;
   overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
-/* ---------- PAGES ---------- */
-.page {
+/* ---------- PROPOSAL PAGE ---------- */
+#proposal {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  display: none;
+  inset: 0;
+  display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.page.active {
-  display: flex;
-}
-
-/* ---------- PAGE 1 (ENVELOPE) ---------- */
-#page1 {
   background: black;
 }
 
-#envelope-container {
-  position: relative;
-  cursor: pointer;
-  text-align: center;
+#proposal img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
-#envelope-container img {
-  width: 80vw;
-  max-width: 400px;
-}
-
-#envelope-text {
-  margin-top: 20px;
-  color: white;
-  font-size: 18px;
-}
-
-/* ---------- PAGE 2 (PROPOSAL) ---------- */
-#page2 img {
-  width: 95vw;
-  max-width: 900px;
-}
-
-/* Invisible click areas */
+/* Invisible YES / NO areas */
 .choice {
   position: absolute;
   cursor: pointer;
@@ -80,7 +54,7 @@ body {
   bottom: 15%;
 }
 
-/* ---------- HEART ANIMATION ---------- */
+/* ---------- HEARTS ---------- */
 .heart {
   position: absolute;
   font-size: 22px;
@@ -94,14 +68,82 @@ body {
   }
 }
 
-/* ---------- WRONG CHOICE ---------- */
+/* ---------- WRONG CHOICE SCREEN ---------- */
 #wrong {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: black;
   color: red;
   display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+  z-index: 10;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PROPOSAL PAGE -->
+<div id="proposal">
+  <img src="proposal.png" alt="Valentine Proposal">
+  <div class="choice" id="yes"></div>
+  <div class="choice" id="no"></div>
+</div>
+
+<!-- WRONG CHOICE -->
+<div id="wrong">WRONG CHOICE</div>
+
+<script>
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const wrong = document.getElementById("wrong");
+const music = document.getElementById("bgMusic");
+
+/* Force music to try playing on load (mobile-safe attempt) */
+window.addEventListener("load", () => {
+  music.volume = 0.4;
+  music.play().catch(() => {});
+});
+
+/* YES → hearts from YES text */
+yes.onclick = () => {
+  const rect = yes.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = centerX + "px";
+    heart.style.top = centerY + "px";
+    heart.style.setProperty("--x", `${Math.random() * 300 - 150}px`);
+    heart.style.setProperty("--y", `${Math.random() * -300}px`);
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 1500);
+  }
+};
+
+/* NO → WRONG CHOICE */
+no.onclick = () => {
+  wrong.style.display = "flex";
+  setTimeout(() => {
+    wrong.style.display = "none";
+  }, 1500);
+};
+</script>
+
+</body>
+</html>
   justify-content: center;
   align-items: center;
   font-size: 40px;
